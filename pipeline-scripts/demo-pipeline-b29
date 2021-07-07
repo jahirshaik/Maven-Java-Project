@@ -34,9 +34,9 @@ node('build-server') {
         archiveArtifacts artifacts: '**/*.war', followSymlinks: false
     }
     stage('Deploy-to-Staging'){
-         sh "mv target/*.war target/webapp.war"
-         sshCommand remote: remote, command: "sh /opt/webserver/bin/shutdown.sh"
-         sshPut remote: remote, from: 'target/webapp.war', into: '/opt/webserver/webapps/'
-         sshCommand remote: remote, command: "sh /opt/webserver/bin/startup.sh"
+         sh mv target/*.war target/webapp.war
+         sshCommand remote: remote, command: sh /opt/webserver/bin/shutdown.sh
+         sshPut remote: remote, from: target/webapp.war, into: /opt/webserver/webapps/
+         sshCommand remote: remote, command: sh /opt/webserver/bin/startup.sh
     }
 }
