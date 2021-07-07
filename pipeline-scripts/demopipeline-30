@@ -29,9 +29,9 @@ node('build-server') {
         archiveArtifacts artifacts: '**/*.war', followSymlinks: false
     }
     stage('deployement-stagging'){
-       sh "mv target/*.war target/webapp.war"
-       sshCommand remote: remote, command: "sh /opt/tomcat-9/bin/shutdown.sh"
-       sshPut remote: remote, from: 'target/webapp.war', into: '/opt/tomcat-9/webapps/'
-       sshCommand remote: remote, command: "sh /opt/tomcat-9/bin/startup.sh"
+       sh 'mv target/*.war target/webapp.war'
+       sshCommand remote: remote, command: sh '/opt/tomcat-9/bin/shutdown.sh'
+       sshPut remote: remote, from: target/webapp.war, into: /opt/tomcat-9/webapps/
+       sshCommand remote: remote, command: sh '/opt/tomcat-9/bin/startup.sh'
     }
 }
