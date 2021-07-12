@@ -43,7 +43,7 @@ def kops = [:]
          
           steps{
                 echo "Sonar Scanner"
-                  sh "mvn clean compile"
+                  sh "mvn clean package"
                            
           }
       }
