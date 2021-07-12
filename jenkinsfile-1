@@ -77,7 +77,23 @@ def kops = [:]
               }
           }
       }
-	 
+      
+      stage('Build Docker Image') {
+         
+         steps{
+                  sh "docker build -t jahirshaik/webapp2 ."  
+         }
+     }
+	stage('Publish Docker Image') {
+         
+        steps{
+
+    	      withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
+    		    sh "docker login -u ${dockerUser} -p ${dockerPassword}"
+	      }
+        	sh "docker push jahirshaik/webapp2"
+         }
+       } 
     }    
    
  }   
