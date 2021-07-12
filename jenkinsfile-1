@@ -43,7 +43,9 @@ def kops = [:]
          
           steps{
                 echo "Sonar Scanner"
-                  sh "mvn clean package"
+                  sh "mvn clean compile"
+		withSonarQubeEnv('sonar-7') { 
+                  sh "mvn sonar:sonar "
                            
           }
       }
