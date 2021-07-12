@@ -1,1 +1,33 @@
+def ansible = [:]
+         ansible.name = 'ansible'
+         ansible.host = '172.31.61.240'
+         ansible.user = 'centos'
+         ansible.password = 'Rnstech@123'
+         ansible.allowAnyHosts = true
+def kops = [:]
+         kops.name = 'kops'
+         kops.host = '172.31.59.252'
+         kops.user = 'centos'
+         kops.password = 'Rnstech@123'
+         kops.allowAnyHosts = true
+         
+  pipeline {
+    agent { 
+      label "build-server"
 
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "maven-3.8"
+    }
+
+    stages {
+        stage('Prepare-Workspace') {
+            steps {
+                // Get some code from a GitHub repository
+               git credentialsId: 'github-code', url: 'https://github.com/jahirshaik/Maven-Java-Project.git'
+		stash 'Source'
+            }
+            
+        }
+    }    
+ }   
